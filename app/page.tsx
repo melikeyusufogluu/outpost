@@ -13,6 +13,8 @@ import {
   howItWorks,
   pricing,
 } from "./_data/landing";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PricingTable } from "@clerk/nextjs";
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
@@ -23,6 +25,9 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
+const PRICING_TAB =
+  "rounded-full px-5 py-1.5 data-active:bg-primary data-active:text-primary-foreground dark:data-active:bg-primary dark:data-active:text-primary-foreground";
+
 export default function Home() {
   return (
     <main className="flex flex-1 flex-col">
@@ -30,8 +35,8 @@ export default function Home() {
         <Eyebrow>{hero.eyebrow}</Eyebrow>
 
         <h1 className="mt-6 max-w-3xl text-5xl font-semibold tracking-tight text-balance sm:text-6xl md:text-7xl">
-          {hero.headline.before}{" "}
-          <span className="text-primary">{hero.headline.highlight}</span>{" "}
+          {hero.headline.before}
+          <span className="text-primary">{hero.headline.highlight}</span>
           {hero.headline.after}
         </h1>
 
@@ -152,7 +157,10 @@ export default function Home() {
             {howItWorks.steps.map((step, i) => {
               const isLast = i === howItWorks.steps.length - 1;
               return (
-                <li key={step.title} className="relative flex gap-6 md:flex-col">
+                <li
+                  key={step.title}
+                  className="relative flex gap-6 md:flex-col"
+                >
                   {!isLast && (
                     <span
                       aria-hidden
@@ -191,19 +199,29 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="pricing" className="scroll-mt-40 border-t px-6 py-24 sm:py-32">
-        <div className="mx-auto max-w-3xl text-center">
-          <Eyebrow>{pricing.eyebrow}</Eyebrow>
-          <h2 className="mt-4 text-4xl font-semibold tracking-tight text-balance sm:text-5xl">
-            {pricing.title}
-          </h2>
-          {/* Placeholder until plans are decided */}
-          <div className="mt-12 rounded-xl border border-dashed bg-card/40 px-6 py-12">
-            <p className="text-pretty text-muted-foreground">
-              {pricing.description}
-            </p>
-          </div>
-        </div>
+      <section
+        id="pricing"
+        className="scroll-mt-40 border-t px-6 py-24 sm:py-32"
+      >
+        <Tabs
+          defaultValue="user"
+          className="mx-auto max-w-5xl items-center gap-10"
+        >
+          <TabsList className="h-auto rounded-full border border-white/10 bg-white/10 p-1">
+            <TabsTrigger value="user" className={PRICING_TAB}>
+              Personal
+            </TabsTrigger>
+            <TabsTrigger value="organization" className={PRICING_TAB}>
+              Team
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="user" className="w-full">
+            <PricingTable for="user" />
+          </TabsContent>
+          <TabsContent value="organization" className="w-full">
+            <PricingTable for="organization" />
+          </TabsContent>
+        </Tabs>
       </section>
 
       <section className="topo-bg flex flex-col items-center border-t px-6 py-24 text-center sm:py-32">

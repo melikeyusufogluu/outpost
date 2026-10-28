@@ -11,6 +11,7 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
+import { PlanButton } from "./PlanButton";
 
 const SideHeader = () => {
   const pathname = usePathname();
@@ -77,10 +78,12 @@ const SideHeader = () => {
             afterSelectOrganizationUrl="/dashboard"
           />
 
-          {isLandingPage && (
+          {isLandingPage ? (
             <Button asChild size="sm">
               <Link href="/dashboard">Dashboard</Link>
             </Button>
+          ) : (
+            <PlanButton />
           )}
 
           <UserButton></UserButton>
