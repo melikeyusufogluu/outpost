@@ -44,18 +44,18 @@ const DashboardPage = async () => {
                 asChild
                 variant="ghost"
                 size="sm"
-                className="gap-1.5 text-muted foreground"
+                className="gap-1.5 text-muted-foreground"
               >
                 <Link href="/workspaces">
-                  <KanbanSquare className="size-4">
-                    View Board ({workspaces.length})
-                  </KanbanSquare>
+                  <KanbanSquare className="size-4" />
+                  View Board ({workspaces.length})
                 </Link>
               </Button>
             )}
 
             <Button variant="outline" size="sm" className="gap-1.5">
-              <Plus className="size-4">New Workspace</Plus>
+              <Plus className="size-4" />
+              New Workspace
             </Button>
           </div>
         </div>
