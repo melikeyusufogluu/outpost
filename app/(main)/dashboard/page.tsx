@@ -7,6 +7,7 @@ import { KanbanSquare, Plus } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import RecentWorkspaces from "./_components/RecentWorkspaces";
+import WorkspaceDialog from "@/components/WorkspaceDialog";
 
 const RECENT_COUNT = 4;
 
@@ -53,10 +54,14 @@ const DashboardPage = async () => {
               </Button>
             )}
 
-            <Button variant="outline" size="sm" className="gap-1.5">
-              <Plus className="size-4" />
-              New Workspace
-            </Button>
+            <WorkspaceDialog
+              trigger={
+                <Button variant="outline" size="sm" className="gap-1.5">
+                  <Plus className="size-4" />
+                  New Workspace
+                </Button>
+              }
+            />
           </div>
         </div>
         {workspaces.length === 0 ? (
