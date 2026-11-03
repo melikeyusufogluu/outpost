@@ -56,7 +56,11 @@ const DashboardPage = async () => {
 
             <WorkspaceDialog
               trigger={
-                <Button variant="outline" size="sm" className="gap-1.5">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="gap-1.5 text-accent-foreground"
+                >
                   <Plus className="size-4" />
                   New Workspace
                 </Button>

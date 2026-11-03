@@ -4,7 +4,6 @@ import { ReactNode, useState } from "react";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -16,6 +15,10 @@ import { Input } from "./ui/input";
 import { useUpgradeDialog } from "./UpgradeDialog";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
+import { useFetch } from "@/hooks/use-fetch";
+import { createWorkspace } from "@/actions/workspace";
+import { UPGRADE_REASONS } from "@/lib/plan-limits";
+import { toast } from "sonner";
 
 const WorkspaceDialog = ({ trigger }: { trigger: ReactNode }) => {
   const [open, setOpen] = useState(false);
@@ -39,7 +42,17 @@ const WorkspaceForm = ({ onDone }: { onDone: () => void }) => {
 
   const openUpgrade = useUpgradeDialog();
 
-  const handleSubmit = () => {};
+  const { fn: createWorkspaceFn, loading } = useFetch(createWorkspace);
+
+  const handleSubmit = async () => {
+    const result = await createWorkspaceFn(name, description);
+    if (!result) return;
+    onDone();
+    if ("limit" in result) return openUpgrade(UPGRADE_REASONS[result.limit]);
+
+    toast.success("Workspace created successfully");
+    router.push(`/workspaces/${result.workspace.id}`);
+  };
 
   return (
     <>
@@ -68,7 +81,9 @@ const WorkspaceForm = ({ onDone }: { onDone: () => void }) => {
         />
 
         <DialogFooter>
-          <Button>Create</Button>
+          <Button onClick={handleSubmit} disabled={loading || !name.trim()}>
+            {loading ? "Creating..." : "Create"}
+          </Button>
         </DialogFooter>
       </div>
     </>
