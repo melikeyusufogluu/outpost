@@ -8,6 +8,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import RecentWorkspaces from "./_components/RecentWorkspaces";
 import WorkspaceDialog from "@/components/WorkspaceDialog";
+import DashboardPrompt from "./_components/DashboardPrompt";
 
 const RECENT_COUNT = 4;
 
@@ -31,7 +32,7 @@ const DashboardPage = async () => {
 
   return (
     <div className="p-8">
-      {/* <DashboardPrompt /> */}
+      <DashboardPrompt />
 
       <section className="mx-auto max-w-6xl">
         <div className="mb-4 flex items-end justify-between gap-4">
